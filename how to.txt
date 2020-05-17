@@ -1,7 +1,7 @@
 analysis table/sp in text
 get table/sp content from database
    table 
-      -- used colums (action)
+      -- used columns (action)
    sp
       -- tables
            used columns (action)
@@ -11,3 +11,4 @@ get table/sp content from database
 1. analysis table/sp/columns in text
 2. analysis table/sp/columns in sp
 3. get table/sp content from database
+4. Êä³ö

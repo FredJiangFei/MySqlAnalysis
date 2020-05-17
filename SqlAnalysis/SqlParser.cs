@@ -1,21 +1,39 @@
 ﻿using Microsoft.SqlServer.TransactSql.ScriptDom;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace SqlAnalysis
 {
-   public class SqlParser
+    public class SqlParser
     {
-        public static TSqlScript ParseScript(string script)
+        public SQLVisitor ParseScript(string script)
         {
             IList<ParseError> parseErrors;
             TSqlParser tsqlParser = new TSql140Parser(true);
-            TSqlFragment fragment;
+            TSqlFragment result;
             using (var stringReader = new StringReader(script))
             {
-                fragment = tsqlParser.Parse(stringReader, out parseErrors);
+                result = tsqlParser.Parse(stringReader, out parseErrors);
+
+                var myVisitor = new SQLVisitor();
+                result.Accept(myVisitor);
+                return myVisitor;
             }
-            return (TSqlScript)fragment;
+        }
+
+        public class SQLVisitor : TSqlFragmentVisitor
+        {
+            public List<SelectStatement> SelectNodes { get; private set; }
+
+            public SQLVisitor() { this.SelectNodes = new List<SelectStatement>(); }
+
+            public override void Visit(SelectStatement node)
+            {
+                base.Visit(node);
+                this.SelectNodes.Add(node);
+            }
         }
     }
 }
