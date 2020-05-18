@@ -11,7 +11,7 @@ namespace SqlAnalysis.Services
 {
     public class QuerySqlObjectService
     {
-        private string _connectionString = "Server=.;Database=CAT_Test;Trusted_Connection=True;";
+        private string _connectionString = "Server=.;Database=SA_Test;Trusted_Connection=True;";
         public List<ScriptObject> GetObjects()
         {
             using (var connection = new SqlConnection(_connectionString))
